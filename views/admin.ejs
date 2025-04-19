@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Security Academy - Admin Panel</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+    }
+    
+    .header {
+      background-color: white;
+      padding: 15px 20px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo h1 {
+      margin: 0;
+      font-size: 24px;
+      color: #333;
+    }
+    
+    .logo span {
+      color: #f26522;
+      font-size: 28px;
+      margin-left: 5px;
+    }
+    
+    .lab-status {
+      background-color: #f8f8f8;
+      padding: 10px 20px;
+      border-bottom: 1px solid #e0e0e0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .lab-title {
+      color: #666;
+      font-size: 16px;
+    }
+    
+    .navigation {
+      background-color: #f8f8f8;
+      padding: 10px 20px;
+      border-bottom: 1px solid #e0e0e0;
+      text-align: right;
+    }
+    
+    .navigation a {
+      color: #0099cc;
+      text-decoration: none;
+      margin-left: 15px;
+      font-size: 14px;
+    }
+    
+    .content {
+      padding: 20px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .admin-section h2 {
+      color: #0099cc;
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      color: #666;
+    }
+    
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      box-sizing: border-box;
+    }
+    
+    .button {
+      background-color: #5cb85c;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 14px;
+      width: 100%;
+    }
+    
+    .button:hover {
+      background-color: #4cae4c;
+    }
+    
+    .separator {
+      height: 1px;
+      background-color: #e0e0e0;
+      margin: 20px 0;
+    }
+    
+    .success-message {
+      background-color: #dff0d8;
+      color: #3c763d;
+      padding: 15px;
+      border-radius: 3px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    
+    .card {
+      background-color: white;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">
+      <h1>WebSecurity<br>Academy</h1>
+      <span>}</span>
+    </div>
+  </div>
+  
+  <div class="lab-status">
+    <div class="lab-title">User role controlled by request parameter</div>
+  </div>
+  
+  <div class="separator"></div>
+  
+  <div class="navigation"> 
+    <a href="/account">My account</a> | 
+    <a href="/admin">Admin Panel</a> | 
+    <a href="/logout">Log out</a>
+  </div>
+  
+  <div class="content">
+    <div class="admin-section">
+      <h2>Admin Panel</h2>
+      
+      <% if (success) { %>
+        <div class="success-message">
+          <strong>Success!</strong> User has been added successfully.
+        </div>
+      <% } %>
+      
+      <div class="card">
+        <h3>Add New User</h3>
+        <form action="/add-user" method="POST">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="userType">User Type</label>
+            <select id="userType" name="userType" required>
+              <option value="regular">Regular User</option>
+              <option value="admin">Admin User</option>
+            </select>
+          </div>
+          
+          <button type="submit" class="button">Add User</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

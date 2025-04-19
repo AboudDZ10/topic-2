@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Security Academy - My Account</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+    }
+    
+    .header {
+      background-color: white;
+      padding: 15px 20px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo h1 {
+      margin: 0;
+      font-size: 24px;
+      color: #333;
+    }
+    
+    .logo span {
+      color: #f26522;
+      font-size: 28px;
+      margin-left: 5px;
+    }
+    
+    .lab-status {
+      background-color: #f8f8f8;
+      padding: 10px 20px;
+      border-bottom: 1px solid #e0e0e0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .lab-title {
+      color: #666;
+      font-size: 16px;
+    }
+    
+    .lab-badge {
+      background-color: #5cb85c;
+      color: white;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 14px;
+    }
+    
+    .lab-badge.not-solved {
+      background-color: #5cb85c;
+    }
+    
+    .back-link {
+      color: #999;
+      text-decoration: none;
+      font-size: 14px;
+      margin-top: 10px;
+      display: inline-block;
+    }
+    
+    .navigation {
+      background-color: #f8f8f8;
+      padding: 10px 20px;
+      border-bottom: 1px solid #e0e0e0;
+      text-align: right;
+    }
+    
+    .navigation a {
+      color: #0099cc;
+      text-decoration: none;
+      margin-left: 15px;
+      font-size: 14px;
+    }
+    
+    .content {
+      padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .account-section h2 {
+      color: #0099cc;
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+    
+    .account-info {
+      margin-bottom: 20px;
+    }
+    
+    .account-info p {
+      margin: 5px 0;
+      color: #666;
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      color: #666;
+    }
+    
+    .form-group input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      box-sizing: border-box;
+    }
+    
+    .update-button {
+      background-color: #5cb85c;
+      color: white;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    
+    .update-button:hover {
+      background-color: #4cae4c;
+    }
+    
+    .separator {
+      height: 1px;
+      background-color: #e0e0e0;
+      margin: 20px 0;
+    }
+
+  .admin-badge {
+    display: inline-block;
+    background-color: #d9534f;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 5px;
+  }
+  
+  .role-toggle {
+    margin: 15px 0;
+  }
+  
+  .toggle-button {
+    display: inline-block;
+    background-color: #f0ad4e;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 3px;
+    text-decoration: none;
+    font-size: 12px;
+  }
+  
+  .toggle-button:hover {
+    background-color: #ec971f;
+  }
+</style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">
+      <h1>WebSecurity<br>Academy</h1>
+      <span>}</span>
+    </div>
+  </div>
+  
+  <div class="lab-status">
+    Topic-2
+<div class="lab-title">User role controlled by request parameter</div>
+  </div>
+  <form action="/account" method="POST">
+  <div class="separator"></div>
+  
+  <div class="navigation"> 
+    <a href="/account">My account</a> | 
+    <% if (isAdmin=='true') { %>
+    <a href="/admin">admin</a> | 
+    <% } %>
+    <a href="/logout">Log out</a>
+  </div>
+  
+  <div class="content">
+    <div class="account-section">
+      <h2>My Account</h2>
+      
+      <div class="account-info">
+        <p>Welcome to your account <%= username %></p>
+      </div>
+    </form>
+    </div>
+  </div>
+</body>
+</html>

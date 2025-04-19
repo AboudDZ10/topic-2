@@ -20,7 +20,6 @@ const users = [
 ];
 
 
-// صفحة تسجيل الدخول
 const path = require('path');
 
 
@@ -35,7 +34,6 @@ app.get('/login', (req, res) => {
 });
 
 
-// معالجة تسجيل الدخول
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
 
@@ -44,36 +42,68 @@ app.post('/login', (req, res) => {
   if (!user) {
     return res.send('Invalid credentials. <a href="/login">Try again</a>');
   }
+    req.session.user = { 
+        username: user.username, 
+        isAdmin: user.isAdmin,
+    };
 
-  // ⚠️ هنا النقطة الحساسة — نرسل الكوكي بناء على isAdmin
   res.cookie('Admin', user.isAdmin ? 'true' : 'false');
-  res.send(`
-    <h3>Welcome, ${username}!</h3>
-    <p>You are now logged in. <a href="/admin">Go to Admin Panel</a></p>
-  `);
+  res.redirect('/account');
 });
 
+app.get("/account", (req, res) => {
+   const username = req.session.user?.username;
+   const isAdmin = req.cookies.Admin;
+   res.render('account', { username, isAdmin });
+});
 
-// صفحة لوحة الإدارة
-app.get('/admin', (req, res) => {
-  const isAdmin = req.cookies.Admin === 'true';
+app.get("/logout", (req, res) => {
+  // مسح الكوكيز
+  res.clearCookie("Admin")
 
+  req.session.destroy((err) => {
+    if (err) {
+      console.error("Error destroying session:", err)
+    }
+    res.redirect("/login")
+  })
+})
+
+app.get("/admin", (req, res) => {
+  const isAdmin = req.cookies.Admin === "true"
   if (!isAdmin) {
-    return res.status(403).send('Access denied. You are not admin.');
+    return res.status(403).send("Access denied. You are not admin.")
   }
 
-  res.send(`
-    <h2>Admin Panel</h2>
-    <p>Welcome, Admin!</p>
-    <form method="POST" action="/delete-carlos">
-      <button type="submit">Delete user carlos</button>
-    </form>
-  `);
-});
+  const success = req.query.success === "true"
+  res.render("admin", { users: users, success: success })
+})
 
-// حذف المستخدم carlos (فقط للمظهر)
-app.post('/delete-carlos', (req, res) => {
-  res.send('<p>User carlos deleted ✅</p>');
+app.post("/add-user", (req, res) => {
+  const isAdmin = req.cookies.Admin === "true"
+  if (!isAdmin) {
+    return res.status(403).send("Access denied. You are not admin.")
+  }
+
+  const { username, password, userType } = req.body
+
+  const existingUser = users.find((u) => u.username === username)
+  if (existingUser) {
+    return res.send('User already exists. <a href="/admin">Go back</a>')
+  }
+
+  const newUser = {
+    username: username,
+    password: password,
+    isAdmin: userType === "admin",
+  }
+
+  users.push(newUser)
+  console.log("User added:", newUser)
+  console.log("Current users:", users)
+
+  res.redirect("/admin?success=true")
+  
 });
 
 app.listen(PORT, () => {
