@@ -24,10 +24,12 @@ const path = require('path');
 
 
 app.get("/", (req, res) => {
+  const isAdmin = req.cookies.Admin === 'false';
   res.render('login');
 });
 
 app.get('/login', (req, res) => {
+  const isAdmin = req.cookies.Admin === 'false';
   res.render('login');
 });
 
@@ -41,7 +43,8 @@ app.post('/login', (req, res) => {
     return res.send('Invalid credentials. <a href="/login">Try again</a>');
   }
     req.session.user = { 
-        username: user.username,
+        username: user.username, 
+        isAdmin: user.isAdmin,
     };
 
   res.cookie('Admin', user.isAdmin ? 'true' : 'false');
@@ -49,15 +52,13 @@ app.post('/login', (req, res) => {
 });
 
 app.get("/account", (req, res) => {
-  if(!req.session.user) {
-    return res.redirect('/login');
-  }
    const username = req.session.user?.username;
    const isAdmin = req.cookies.Admin;
    res.render('account', { username, isAdmin });
 });
 
 app.get("/logout", (req, res) => {
+  // مسح الكوكيز
   res.clearCookie("Admin")
 
   req.session.destroy((err) => {
