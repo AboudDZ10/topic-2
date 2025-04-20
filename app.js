@@ -86,7 +86,7 @@ app.post("/add-user", (req, res) => {
   }
 
   const { username, password, userType } = req.body
-
+  
   const existingUser = users.find((u) => u.username === username)
   if (existingUser) {
     return res.send('User already exists. <a href="/admin">Go back</a>')
