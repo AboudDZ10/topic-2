@@ -52,13 +52,15 @@ app.post('/login', (req, res) => {
 });
 
 app.get("/account", (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/login');
+  }
    const username = req.session.user?.username;
    const isAdmin = req.cookies.Admin;
    res.render('account', { username, isAdmin });
 });
 
 app.get("/logout", (req, res) => {
-  // مسح الكوكيز
   res.clearCookie("Admin")
 
   req.session.destroy((err) => {
